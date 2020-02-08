@@ -8,7 +8,11 @@ public:
 	Vector2();
 	Vector2(float x, float y);
 	void SetValue(float x, float y);
+	void SetValue(Vector2 vec);
 	float GetX();
 	float GetY();
+	void Normalize();
+	void Scale(float S);
+	void Scale(float s1, float s2);
 };
 

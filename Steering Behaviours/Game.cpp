@@ -42,6 +42,10 @@ void Game::Init(Platform* platform, GameStateManager* manager)
 	this->manager = manager;
 	agent1.SetPos(platform->width/2, platform->height / 2);
 	std::cout << " Game Init" << std::endl;
+	//agent1.SetTarget(100, 500);
+	agent1.SetMaxSpeed(40);
+	agent1.SetMaxSteer(30);
+	agent1.SetType(type::Seek);
 }
 
 void Game::Draw()
@@ -74,12 +78,15 @@ bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, fl
 		}
 	}
 
+
+	agent1.SetTarget(*mouseX, *mouseY);
 	std::cout << " Game Input" << std::endl;
 	return false;
 }
 
 void Game::Update()
 {
+	agent1.UpdateAgent();
 	std::cout << " Game Update" << std::endl;
 }
 
