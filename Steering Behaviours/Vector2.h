@@ -1,4 +1,6 @@
 #pragma once
+#include <math.h>
+
 class Vector2
 {
 private:
@@ -14,5 +16,7 @@ public:
 	void Normalize();
 	void Scale(float S);
 	void Scale(float s1, float s2);
+	int distance(Vector2 v1, Vector2 v2);
+	int length();
 };
 

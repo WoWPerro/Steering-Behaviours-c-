@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="ArriveScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -163,13 +164,16 @@
     <ClCompile Include="ListaT.cpp" />
     <ClCompile Include="NodoT.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="SeekScreen.cpp" />
     <ClCompile Include="StackT.cpp" />
     <ClCompile Include="Steering Behaviours.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="ArriveScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
@@ -178,9 +182,11 @@
     <ClInclude Include="ListaT.h" />
     <ClInclude Include="NodoT.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="SeekScreen.h" />
     <ClInclude Include="StackT.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

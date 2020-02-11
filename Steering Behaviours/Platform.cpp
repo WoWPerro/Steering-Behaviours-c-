@@ -61,12 +61,89 @@ void Platform::DrawRect(int x, int y, int w, int h)
 	SDL_RenderDrawRect(renderer, &rect);
 }
 
-void  Platform::DrawTriangle(int x, int y, int h, int b)
+void  Platform::DrawTriangle(float x, float y, float h, float b)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-	SDL_RenderDrawLine(renderer, x, y, x + (b/2), y-h);
-	SDL_RenderDrawLine(renderer, x, y, x + b, y);
-	SDL_RenderDrawLine(renderer, x + b, y, x + (b / 2), y - h);
+	SDL_RenderDrawLine(renderer, x, y, x + (b / 2), y - h); //punta
+	SDL_RenderDrawLine(renderer, x, y, x + b, y); //base
+	SDL_RenderDrawLine(renderer, x + b, y, x + (b / 2), y - h); //punta
+}
+
+void Platform::DrawTriangle(float x, float y, float h, float b, int R, int B, int G)
+{
+	SDL_SetRenderDrawColor(renderer, R, G, B, 0xFF);
+	SDL_RenderDrawLine(renderer, x, y, x + (b / 2), y - h); //punta
+	SDL_RenderDrawLine(renderer, x, y, x + b, y); //base
+	SDL_RenderDrawLine(renderer, x + b, y, x + (b / 2), y - h); //punta
+}
+
+
+void Platform::DrawVector(float x, float y, float v1, float v2, int R, int G, int B)
+{
+	SDL_SetRenderDrawColor(renderer, R, G, B, 0xFF);
+	SDL_RenderDrawLine(renderer, x, y, v1, v2); //punta
+}
+
+void  Platform::DrawTriangle(float x, float y, float h, float b, Vector2 direction)
+{
+	direction.Normalize();
+	float angle1;
+	angle1 = direction.GetX();
+	float dir = direction.length();
+	float rot = acos(angle1 / dir);
+
+	Vector2 nh;
+	nh.SetValue(0, h/2);
+	Vector2 nb;
+	nb.SetValue(b/2, -h/2);
+	Vector2 nx;
+	nx.SetValue(-b / 2, -h / 2);
+
+	float newx = ((nh.GetX() * cos(angle1)) + (nh.GetY() * sin(angle1))) + x;
+	float newy = (-(nh.GetX() * sin(angle1)) + (nh.GetY() * cos(angle1))) + y;
+	float newx2 = (((nb.GetX()) * cos(angle1)) + ((nb.GetY()) * sin(angle1))) + x;
+	float newy2 = ((-(nb.GetX()) * sin(angle1)) + ((nb.GetY()) * cos(angle1))) + y;
+	float newx3 = (((nx.GetX()) * cos(angle1)) + ((nx.GetY()) * sin(angle1))) + x;
+	float newy3 = ((-(nx.GetX()) * sin(angle1)) + ((nx.GetY()) * cos(angle1))) + y;
+
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_RenderDrawLine(renderer, newx, newy, newx2, newy2); //punta
+	SDL_RenderDrawLine(renderer, newx, newy, newx3, newy3); //base
+	SDL_RenderDrawLine(renderer, newx3, newy3, newx2, newy2); //punta
+}
+
+void Platform::DrawCircle(float xc, float yc, float r, int R, int B, int G)
+{
+	float p = 1 - r;
+	yc = -yc;
+	float x = 0;
+	float y = r;
+
+	do
+	{
+		//Aprovechar simetría del círculo
+		//SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x40, 0xFF);
+		SDL_SetRenderDrawColor(renderer, R, G, B, 0xFF);
+		SDL_RenderDrawPoint(renderer, x + xc, y + yc);
+		SDL_RenderDrawPoint(renderer, x + xc, -y + yc);
+		SDL_RenderDrawPoint(renderer, -x + xc, y + yc);
+		SDL_RenderDrawPoint(renderer, -x + xc, -y + yc);
+		SDL_RenderDrawPoint(renderer, y + xc, x + yc);
+		SDL_RenderDrawPoint(renderer, y + xc, -x + yc);
+		SDL_RenderDrawPoint(renderer, -y + xc, x + yc);
+		SDL_RenderDrawPoint(renderer, -y + xc, -x + yc);
+		if (p <= 0)
+		{
+			x++;
+			p = p + (2 * x) + 3;
+		}
+		else if (p > 0)
+		{
+			x++;
+			y = y - 1;
+			p = (2 * x) - (2 * y) + 5 + p;
+		}
+	} while (x <= y);
 }
 
 void Platform::RenderImage(Image* image, int x, int y, float angle)

@@ -1,5 +1,5 @@
 #include "Vector2.h"
-#include <math.h>
+
 
 Vector2::Vector2()
 {
@@ -39,7 +39,7 @@ void Vector2::Normalize()
 {
 	float x1 = _x * _x;
 	float y1 = _y * _y;
-	float magnitude = pow(x1 + y1, 0.5);
+	float magnitude = powf(x1 + y1, 0.5f);
 	_x = _x / magnitude;
 	_y = _y / magnitude;
 }
@@ -54,4 +54,20 @@ void Vector2::Scale(float s1, float s2)
 {
 	_x = _x * s1;
 	_y = _y * s2;
+}
+
+int Vector2::distance(Vector2 v1, Vector2 v2)
+{
+	float r1;
+	r1 = (powf(v2.GetX() - v1.GetX(), 2) + powf(v2.GetY() - v1.GetY(), 2));
+	float distance = powf(r1, 0.5f);
+	return distance;
+}
+
+int Vector2::length()
+{
+	float r1;
+	r1 = (powf(_x, 2) + powf(_y, 2));
+	float length = powf(r1, 0.5f);
+	return length;
 }

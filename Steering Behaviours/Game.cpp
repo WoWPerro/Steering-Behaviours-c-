@@ -41,18 +41,49 @@ void Game::Init(Platform* platform, GameStateManager* manager)
 	this->platform = platform;
 	this->manager = manager;
 	agent1.SetPos(platform->width/2, platform->height / 2);
+	Wall wall(1500,500,150);
+	walls.push_back(wall);
+	agent1.SetWalls(walls);
 	std::cout << " Game Init" << std::endl;
-	//agent1.SetTarget(100, 500);
-	agent1.SetMaxSpeed(40);
-	agent1.SetMaxSteer(30);
 	agent1.SetType(type::Seek);
+	agent1.SetMaxSpeed(30);
+	agent1.SetMaxSteer(1);
+	//===========================================
+	//agent1.SetType(type::Arrive);
+	//agent1.SetMaxSpeed(4);
+	//agent1.SetMaxSteer(20);
+	//agent1.SetSlowingRadius(800);
+	//===========================================
+	//agent1.SetType(type::Flee);
+	//agent1.SetMaxSpeed(20);
+	//agent1.SetMaxSteer(20);
+	//agent1.SetSlowingRadius(300);
+	//=========================================
+	/*agent1.SetType(type::Wander);
+	agent1.SetMaxSpeed(20);
+	agent1.SetMaxSteer(20);
+	agent1.SetSlowingRadius(800);*/
+	//==========================================
+	//agent1.SetType(type::ObstacleAvoidance);
+	//agent1.SetMaxSpeed(8);
+	//agent1.SetMaxSteer(20);
 }
 
 void Game::Draw()
 {
 	platform->RenderClear();
 	std::cout << " Game Draw" << std::endl;
-	platform->DrawTriangle(agent1.GetPos().GetX(), agent1.GetPos().GetY(), 60, 40);
+	platform->DrawTriangle(agent1.GetPos().GetX(), agent1.GetPos().GetY(), 60, 40, agent1.GetVel());
+
+	for (int i = 0; i < walls.size; i++)
+	{
+		float wx = walls.get_at(i)->value.GetX();
+		float wy = walls.get_at(i)->value.GetY();
+		float wr = walls.get_at(i)->value.GetR();
+		platform->DrawCircle(wx, -wy, wr, 0xFF, 0x00, 0x40);;
+	}
+	platform->DrawCircle(agent1.GetTarget().GetX(), -agent1.GetTarget().GetY(), agent1.GetSlowingRadius(), 0x40, 0xff, 0x00);
+	platform->DrawVector(agent1.GetPos().GetX(), agent1.GetPos().GetY(), agent1.GetPos().GetX() + agent1.GetVel().GetX() * 5, agent1.GetPos().GetY() + agent1.GetVel().GetY()* 5, 0xff, 0xa4, 0x40);
 	platform->RenderPresent();
 }
 
